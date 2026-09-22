@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OVA Educación Financiera — El Ahorro</title>
+<style>
+:root{
+  --bg:#f4f7fb; --card:#ffffff; --text:#172033; --muted:#5d687b;
+  --primary:#1769e0; --primary-dark:#0d4fae; --accent:#16a36a;
+  --wrong:#c93b3b; --border:#dfe5ee; --shadow:0 12px 30px rgba(23,32,51,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#1769e0,#0d4fae);color:white;padding:48px 20px;text-align:center}
+header h1{font-size:clamp(2.2rem,6vw,4rem);margin:0 0 10px}
+header p{font-size:1.15rem;margin:0 auto;max-width:700px}
+nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 3px 12px rgba(0,0,0,.05)}
+.nav-inner{max-width:1100px;margin:auto;display:flex;gap:8px;overflow:auto;padding:10px 14px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);font-weight:700;padding:9px 13px;border-radius:10px}
+nav a:hover{background:#eaf2ff;color:var(--primary)}
+main{max-width:1100px;margin:0 auto;padding:30px 16px}
+section{scroll-margin-top:80px;margin-bottom:28px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;box-shadow:var(--shadow)}
+.hero-card{display:grid;grid-template-columns:1.3fr .7fr;gap:25px;align-items:center}
+.big-number{font-size:5rem;text-align:center}
+h2{font-size:2rem;margin-top:0;color:var(--primary-dark)}
+h3{color:var(--primary-dark)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.mini{border:1px solid var(--border);border-radius:15px;padding:20px;background:#fbfcff}
+.callout{background:#eef5ff;border-left:5px solid var(--primary);padding:16px 18px;border-radius:10px}
+.example{background:#f1fbf6;border-left:5px solid var(--accent);padding:16px 18px;border-radius:10px}
+button{border:0;border-radius:12px;padding:12px 18px;background:var(--primary);color:white;font-weight:700;cursor:pointer;font-size:1rem}
+button:hover{background:var(--primary-dark)}
+button.secondary{background:#e8eef7;color:var(--text)}
+button:focus,input:focus,textarea:focus{outline:3px solid #a9caff;outline-offset:2px}
+.quiz-question{border:1px solid var(--border);border-radius:16px;padding:20px;margin:16px 0}
+.options{display:grid;gap:9px;margin-top:12px}
+.option{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer}
+.option:hover{background:#f5f8fc}
+.result{display:none;margin-top:20px;padding:18px;border-radius:14px;font-weight:700}
+.result.show{display:block}
+.correct{background:#e9f8f0;color:#17683f}
+.incorrect{background:#fff0f0;color:#922d2d}
+.progress{height:12px;background:#e4e9f1;border-radius:20px;overflow:hidden;margin:10px 0 20px}
+.progress-bar{height:100%;width:0;background:var(--accent);transition:width .3s}
+label{font-weight:700;display:block;margin-top:13px}
+input,textarea{width:100%;padding:12px;border:1px solid #cbd4e1;border-radius:10px;font:inherit}
+textarea{min-height:100px;resize:vertical}
+.goal-output{display:none;margin-top:18px;background:#eef8f3;border:1px solid #bde5d0;border-radius:14px;padding:18px}
+.goal-output.show{display:block}
+footer{text-align:center;color:var(--muted);padding:30px 16px 45px}
+.small{color:var(--muted);font-size:.95rem}
+.badge{display:inline-block;background:#eaf2ff;color:var(--primary-dark);padding:6px 10px;border-radius:999px;font-weight:700;font-size:.85rem}
+@media(max-width:760px){
+ .hero-card,.grid{grid-template-columns:1fr}
+ .card{padding:21px}
+ .big-number{font-size:4rem}
+}
+
+.quiz-question.is-correct{border:2px solid #16a36a;background:#f1fbf6}
+.quiz-question.is-incorrect{border:2px solid #c93b3b;background:#fff5f5}
+.answer-feedback{display:block;margin-top:12px;padding:10px 12px;border-radius:10px;font-weight:700}
+.answer-feedback.good{background:#e9f8f0;color:#17683f}.answer-feedback.bad{background:#fff0f0;color:#922d2d}
+.goal-output.success{animation:goalIn .5s ease both}.goal-celebration{font-size:2.4rem;display:inline-block;animation:bounce 1s infinite}
+.goal-progress{height:12px;background:#dfeee7;border-radius:20px;overflow:hidden;margin:12px 0}.goal-progress-bar{height:100%;width:100%;background:var(--accent);animation:fill .8s ease}
+@keyframes goalIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}@keyframes bounce{50%{transform:translateY(-7px)}}@keyframes fill{from{width:0}to{width:100%}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Proyecto de Educación Financiera · Matemáticas · Grado 10°</div>
+  <h1>💰 El Ahorro</h1>
+  <p>Pequeñas decisiones de hoy, grandes metas de mañana.</p>
+</header>
+
+<nav aria-label="Navegación principal">
+  <div class="nav-inner">
+    <a href="#inicio">Inicio</a>
+    <a href="#concepto">¿Qué es?</a>
+    <a href="#metas">Metas</a>
+    <a href="#habitos">Hábitos</a>
+    <a href="#actividad">Actividad</a>
+    <a href="#reto">Mi meta</a>
+    <a href="#cierre">Cierre</a>
+  </div>
+</nav>
+
+<main>
+<section id="inicio">
+  <div class="card hero-card">
+    <div>
+      <h2>👋 Bienvenido</h2>
+      <p>¿Alguna vez has querido comprar algo, hacer un viaje o alcanzar una meta, pero no tienes suficiente dinero?</p>
+      <p>Ahorrar consiste en <strong>guardar una parte del dinero que recibimos para utilizarlo en el futuro</strong>. No se trata simplemente de dejar de gastar, sino de tomar una decisión consciente sobre nuestro dinero para alcanzar una meta.</p>
+      <div class="callout"><strong>Objetivo:</strong> comprender qué es ahorrar, diferenciarlo de simplemente no gastar, reconocer hábitos útiles y crear una meta de ahorro.</div>
+    </div>
+    <div class="big-number" aria-label="Símbolo de ahorro">🏦</div>
+  </div>
+</section>
+
+<section id="concepto">
+  <div class="card">
+    <h2>💡 ¿Qué es ahorrar?</h2>
+    <p><strong>Ahorrar es reservar una parte del dinero disponible para utilizarla posteriormente</strong>, generalmente con un propósito o meta.</p>
+    <p>El ahorro requiere <strong>planificación, constancia y disciplina</strong>.</p>
+    <div class="grid">
+      <div class="mini">
+        <h3>🚫 No gastar</h3>
+        <p>Simplemente decides no utilizar tu dinero en ese momento.</p>
+      </div>
+      <div class="mini">
+        <h3>🎯 Ahorrar</h3>
+        <p>Decides conscientemente reservarlo para utilizarlo en el futuro, preferiblemente con una meta definida.</p>
+      </div>
+    </div>
+    <div class="example">
+      <strong>Ejemplo:</strong> Juan recibe $50.000 y no compra nada porque ese día no encontró algo que quisiera → <strong>no gastar</strong>.<br><br>
+      María recibe $50.000 y decide guardar $20.000 cada semana para comprar algo que necesita → <strong>ahorrar</strong>.
+    </div>
+  </div>
+</section>
+
+<section id="metas">
+  <div class="card">
+    <h2>🎯 El ahorro y las metas</h2>
+    <p>Una <strong>meta de ahorro</strong> es aquello que queremos conseguir utilizando el dinero que hemos decidido guardar.</p>
+    <p>Una meta puede ser clara y tener un plazo.</p>
+    <div class="grid">
+      <div class="mini">🎧 Comprar unos audífonos.</div>
+      <div class="mini">📚 Comprar materiales para estudiar.</div>
+      <div class="mini">⚽ Comprar implementos deportivos.</div>
+      <div class="mini">🎁 Comprar un regalo.</div>
+    </div>
+    <div class="callout">
+      <strong>Ejemplo:</strong><br>
+      ¿Qué quiero? → unos audífonos<br>
+      ¿Cuánto necesito? → $200.000<br>
+      ¿Cuánto puedo ahorrar? → $20.000 por semana<br>
+      ¿Cuándo quiero conseguirlo? → cuando reúna el dinero necesario.
+    </div>
+  </div>
+</section>
+
+<section id="habitos">
+  <div class="card">
+    <h2>🔑 Hábitos que ayudan a ahorrar</h2>
+    <div class="grid">
+      <div class="mini"><h3>1. 📌 Establecer una meta</h3><p>Saber para qué estás ahorrando ayuda a mantener la motivación.</p></div>
+      <div class="mini"><h3>2. 💵 Separar el dinero</h3><p>Cuando recibas dinero, puedes reservar primero la cantidad que hayas decidido ahorrar.</p></div>
+      <div class="mini"><h3>3. 📝 Llevar un registro</h3><p>Anotar cuánto recibes, gastas y ahorras permite conocer mejor tus hábitos.</p></div>
+      <div class="mini"><h3>4. 🛑 Evitar gastos innecesarios</h3><p>Antes de comprar, pregúntate: “¿Realmente lo necesito o puedo esperar?”</p></div>
+      <div class="mini"><h3>5. 🔄 Ser constante</h3><p>Ahorrar pequeñas cantidades de manera frecuente puede ayudarte a acercarte progresivamente a una meta.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="actividad">
+  <div class="card">
+    <h2>🎮 Actividad interactiva: ¿Ahorrar o no gastar?</h2>
+    <p>Selecciona una respuesta para cada pregunta y pulsa <strong>Calificar actividad</strong>.</p>
+    <div class="progress" aria-label="Progreso de la actividad"><div class="progress-bar" id="progressBar"></div></div>
+
+    <form id="quizForm">
+      <div class="quiz-question">
+        <strong>1. Carlos recibe $30.000 y decide guardar $10.000 cada semana para comprar unos guayos. ¿Qué está haciendo?</strong>
+        <div class="options">
+          <label class="option"><input type="radio" name="q1" value="A"> A. No gastar</label>
+          <label class="option"><input type="radio" name="q1" value="B"> B. Ahorrar</label>
+          <label class="option"><input type="radio" name="q1" value="C"> C. Pedir prestado</label>
+          <label class="option"><input type="radio" name="q1" value="D"> D. Gastar</label>
+        </div>
+      </div>
+
+      <div class="quiz-question">
+        <strong>2. Laura recibe dinero y lo guarda porque ese día no encontró nada que quisiera comprar. ¿Esto necesariamente significa que está ahorrando?</strong>
+        <div class="options">
+          <label class="option"><input type="radio" name="q2" value="A"> A. Sí, porque no gastó</label>
+          <label class="option"><input type="radio" name="q2" value="B"> B. No necesariamente</label>
+          <label class="option"><input type="radio" name="q2" value="C"> C. Sí, siempre</label>
+          <label class="option"><input type="radio" name="q2" value="D"> D. No, porque perdió el dinero</label>
+        </div>
+      </div>
+
+      <div class="quiz-question">
+        <strong>3. ¿Cuál de estos hábitos ayuda más a cumplir una meta de ahorro?</strong>
+        <div class="options">
+          <label class="option"><input type="radio" name="q3" value="A"> A. Gastar primero y ahorrar lo que sobre</label>
+          <label class="option"><input type="radio" name="q3" value="B"> B. No saber cuánto dinero tienes</label>
+          <label class="option"><input type="radio" name="q3" value="C"> C. Establecer una meta y separar una cantidad para ahorrar</label>
+          <label class="option"><input type="radio" name="q3" value="D"> D. Comprar todo lo que quieras</label>
+        </div>
+      </div>
+
+      <div class="quiz-question">
+        <strong>4. Sofía quiere reunir $100.000 y decide guardar $10.000 cada semana. ¿Qué está haciendo?</strong>
+        <div class="options">
+          <label class="option"><input type="radio" name="q4" value="A"> A. Estableciendo un hábito de ahorro</label>
+          <label class="option"><input type="radio" name="q4" value="B"> B. Gastando su dinero</label>
+          <label class="option"><input type="radio" name="q4" value="C"> C. Pidiendo un préstamo</label>
+          <label class="option"><input type="radio" name="q4" value="D"> D. Evitando una meta</label>
+        </div>
+      </div>
+
+      <div class="quiz-question">
+        <strong>5. Verdadero o falso: “Ahorrar significa dejar de gastar completamente”.</strong>
+        <div class="options">
+          <label class="option"><input type="radio" name="q5" value="A"> A. Verdadero</label>
+          <label class="option"><input type="radio" name="q5" value="B"> B. Falso</label>
+        </div>
+      </div>
+
+      <button type="button" id="gradeQuizBtn">✅ Calificar actividad</button>
+      <button type="button" class="secondary" id="resetQuizBtn">↩️ Reiniciar</button>
+      <div id="quizResult" class="result" role="status"></div>
+    </form>
+  </div>
+</section>
+
+<section id="reto">
+  <div class="card">
+    <h2>🧩 Reto final: crea tu meta de ahorro</h2>
+    <p>Completa los campos y pulsa <strong>Crear mi meta</strong>. Los datos se usan solamente en esta página.</p>
+
+    <label for="student">Tu nombre</label>
+    <input id="student" type="text" placeholder="Escribe tu nombre">
+
+    <label for="goal">🎯 Mi meta</label>
+    <input id="goal" type="text" placeholder="Ej.: Comprar unos audífonos">
+
+    <label for="amount">💰 ¿Cuánto dinero necesito?</label>
+    <input id="amount" type="number" min="0" step="1000" placeholder="Ej.: 200000">
+
+    <label for="time">📅 ¿En cuánto tiempo quiero conseguirlo?</label>
+    <input id="time" type="text" placeholder="Ej.: 10 semanas">
+
+    <label for="saving">💵 ¿Cuánto puedo ahorrar periódicamente?</label>
+    <input id="saving" type="number" min="0" step="1000" placeholder="Ej.: 20000">
+
+    <label for="habit">📝 ¿Qué hábito voy a utilizar?</label>
+    <textarea id="habit" placeholder="Ej.: Separar una cantidad de dinero cada semana y registrar mis gastos."></textarea>
+
+    <br>
+    <button type="button" id="createGoalBtn">🎯 Crear mi meta</button>
+    <button type="button" class="secondary" id="clearGoalBtn">🗑️ Borrar</button>
+
+    <div id="goalOutput" class="goal-output"></div>
+  </div>
+</section>
+
+<section id="cierre">
+  <div class="card">
+    <h2>🏁 ¿Qué aprendimos?</h2>
+    <ul>
+      <li>Ahorrar significa reservar parte del dinero para el futuro.</li>
+      <li>Ahorrar no es exactamente lo mismo que simplemente no gastar.</li>
+      <li>Tener una meta facilita mantener la motivación.</li>
+      <li>La planificación y la constancia ayudan a desarrollar el hábito del ahorro.</li>
+      <li>Pequeñas cantidades pueden formar parte de un plan de ahorro.</li>
+    </ul>
+    <div class="callout">
+      <strong>💭 Reflexiona:</strong> “No importa solamente cuánto dinero tienes, sino cómo decides utilizarlo.”
+    </div>
+    <div class="example">
+      <strong>🌟 Tu próximo paso:</strong> Elige una meta, establece un plan y empieza a construir el hábito de ahorrar.
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h2>📚 Referencias</h2>
+    <p>Guía de elaboración propia — Construcción de tu OVA en HTML, Proyecto de Educación Financiera, Matemáticas, grado 10°.</p>
+    <p>Guía de Educación Financiera (AC-FO-007-C), proporcionada por el docente.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>OVA de Educación Financiera · El ahorro · Grado 10°</p>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const answers={q1:"B",q2:"B",q3:"C",q4:"A",q5:"B"};
+function $(id){return document.getElementById(id)}
+function updateProgress(){
+ const total=Object.keys(answers).length;
+ let answered=0;
+ Object.keys(answers).forEach(q=>{if(document.querySelector('input[name="'+q+'"]:checked')) answered++;});
+ $("progressBar").style.width=(answered/total*100)+"%";
+}
+function clearQuizFeedback(){
+ document.querySelectorAll(".quiz-question").forEach(q=>{
+  q.classList.remove("is-correct","is-incorrect");
+  const f=q.querySelector(".answer-feedback"); if(f) f.remove();
+ });
+}
+function gradeQuiz(){
+ clearQuizFeedback();
+ let score=0, unanswered=0;
+ Object.keys(answers).forEach(q=>{
+  const input=document.querySelector('input[name="'+q+'"]');
+  const question=input.closest(".quiz-question");
+  const selected=document.querySelector('input[name="'+q+'"]:checked');
+  const f=document.createElement("div"); f.className="answer-feedback "+(selected&&selected.value===answers[q]?"good":"bad");
+  if(!selected){unanswered++; question.classList.add("is-incorrect"); f.textContent="⚠️ Sin responder. Selecciona una opción.";}
+  else if(selected.value===answers[q]){score++; question.classList.add("is-correct"); f.textContent="✅ ¡Correcta!";}
+  else{question.classList.add("is-incorrect"); f.innerHTML="❌ Incorrecta. La respuesta correcta es <strong>"+answers[q]+"</strong>.";}
+  question.appendChild(f);
+ });
+ const result=$("quizResult"); result.className="result show";
+ if(unanswered){result.classList.add("incorrect"); result.innerHTML="⚠️ Tienes "+unanswered+" pregunta"+(unanswered===1?"":"s")+" sin responder. Revisa las preguntas marcadas en rojo."; return;}
+ const percent=Math.round(score/5*100);
+ const msg=score===5?"🏆 ¡Excelente! Dominas los conceptos principales del ahorro.":score>=3?"👏 ¡Muy bien! Tienes una buena comprensión del tema.":"📚 Sigue repasando el contenido e inténtalo nuevamente.";
+ result.classList.add(score>=3?"correct":"incorrect");
+ result.innerHTML="<strong>Resultado: "+score+"/5 ("+percent+"%)</strong><br>"+msg+"<br><span class='small'>Verde = correcta · Rojo = incorrecta</span>";
+}
+function resetQuiz(){
+ document.querySelectorAll('#quizForm input[type="radio"]').forEach(i=>i.checked=false);
+ clearQuizFeedback(); $("quizResult").className="result"; $("quizResult").innerHTML=""; $("progressBar").style.width="0%";
+}
+function money(v){const n=Number(v);return Number.isFinite(n)?new Intl.NumberFormat("es-CO",{style:"currency",currency:"COP",maximumFractionDigits:0}).format(n):"";}
+function escapeHTML(str){return String(str).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+function createGoal(){
+ const student=$("student").value.trim(),goal=$("goal").value.trim(),amount=$("amount").value,time=$("time").value.trim(),saving=$("saving").value,habit=$("habit").value.trim(),out=$("goalOutput");
+ if(!goal||!amount||!time||!saving||!habit){out.className="goal-output show incorrect";out.innerHTML="⚠️ Completa la meta, el monto, el tiempo, el ahorro periódico y el hábito.";return;}
+ const periods=Math.ceil(Number(amount)/Number(saving));
+ out.className="goal-output show success";
+ out.innerHTML='<div style="text-align:center"><span class="goal-celebration">🎉</span><h3>¡Meta creada con éxito!</h3></div>'+
+ (student?'<p><strong>Estudiante:</strong> '+escapeHTML(student)+'</p>':'')+
+ '<p><strong>🎯 Meta:</strong> '+escapeHTML(goal)+'</p><p><strong>💰 Monto:</strong> '+money(amount)+'</p><p><strong>📅 Tiempo:</strong> '+escapeHTML(time)+'</p><p><strong>💵 Ahorro periódico:</strong> '+money(saving)+'</p><p><strong>🔢 Aportes aproximados:</strong> '+periods+'</p><div class="goal-progress"><div class="goal-progress-bar"></div></div><p><strong>📝 Hábito:</strong> '+escapeHTML(habit)+'</p><p>💪 <strong>¡Tu meta ya tiene un plan!</strong></p>';
+ out.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function clearGoal(){["student","goal","amount","time","saving","habit"].forEach(id=>$(id).value="");$("goalOutput").className="goal-output";$("goalOutput").innerHTML="";$("student").focus();}
+document.addEventListener("DOMContentLoaded",function(){
+ document.querySelectorAll('#quizForm input[type="radio"]').forEach(i=>i.addEventListener("change",updateProgress));
+ $("gradeQuizBtn").addEventListener("click",gradeQuiz);$("resetQuizBtn").addEventListener("click",resetQuiz);$("createGoalBtn").addEventListener("click",createGoal);$("clearGoalBtn").addEventListener("click",clearGoal);
+ updateProgress();
+});
+})();
+</script>
+
+</body>
+</html>
